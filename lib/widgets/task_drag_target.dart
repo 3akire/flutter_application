@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_trial/widgets/task_card.dart';
 
 import '../models/stage_model.dart';
 import '../models/task_model.dart';
@@ -81,7 +82,9 @@ class _TaskDragTargetState extends State<TaskDragTarget> {
                     controller: ScrollController(),
                     itemCount: stageTask.length,
                     itemBuilder: (context, index){
-                      return Text(tasks[index].title);
+                      return TaskCard(
+                        task: tasks[index],
+                      );
               
                     },
                     ),
