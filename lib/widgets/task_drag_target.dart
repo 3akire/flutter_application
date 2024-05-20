@@ -68,7 +68,8 @@ class _TaskDragTargetState extends State<TaskDragTarget> {
         Divider(
           color: stage.color, 
           height: 20, 
-          thickness: 2,),
+          thickness: 2,
+          ),
            Expanded(
              child: DragTarget<Task>(
               builder: ((context, candidateData, rejectedData ){
@@ -83,15 +84,21 @@ class _TaskDragTargetState extends State<TaskDragTarget> {
                     itemCount: stageTask.length,
                     itemBuilder: (context, index){
                       return TaskCard(
-                        task: tasks[index],
+                        task: stageTask[index],
                       );
               
                     },
                     ),
               );
-              }
-              ),
-                       ),
+              }) ,
+                       onAccept:(task){
+                        setState(() {
+                          Task newTask = task.copyWith(stage: stage);
+                          tasks = List.from(tasks)
+                          ..remove(task)
+                          ..add(newTask);
+                        });
+                       }, ),
            )
       ],
     ),

@@ -43,7 +43,7 @@ final List<Stage> stages;
 @override
   Widget build(BuildContext context) {
    return Container(
-    color: Colors.blue,
+    margin: const EdgeInsets.all(20.0),
     child:Row(
       children: [
       _Sidebar(),
@@ -124,7 +124,7 @@ final List<Stage> stages;
   Widget build(BuildContext context) {
 
    return Container(
-    color: Colors.amber,
+    margin: const EdgeInsets.all(20.0),
     child:Row(children: [
       _Sidebar(),
       const SizedBox(width: 10),
