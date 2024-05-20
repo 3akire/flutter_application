@@ -1,20 +1,32 @@
 
 import 'package:flutter/material.dart';
 
+import '../models/stage_model.dart';
+import '../widgets/task_drag_target.dart';
+
 class HomeScreen extends StatelessWidget{
   const HomeScreen({super.key});
   
   @override
   Widget build(BuildContext context) {
-  
+    List<Stage> stages= Stage.stages;
     return Scaffold( 
       backgroundColor: const Color(0xFFEEF2F5),
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth >1200){
-            return _DesktopLayout();
+            return _DesktopLayout(
+              constraints: constraints,
+              stages: stages
+            );
           }else{
-            return _TabletLayout();
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal ,
+              child: _TabletLayout(
+                constraints: constraints,
+                stages: stages
+              ),
+            );
           }
         },),
     );
@@ -22,8 +34,12 @@ class HomeScreen extends StatelessWidget{
 }
 
 class _DesktopLayout extends StatelessWidget{
- const _DesktopLayout({super.key});
-  
+ const _DesktopLayout({super.key, 
+ required this.constraints,
+ required this.stages,});
+
+final BoxConstraints constraints;
+final List<Stage> stages;
 @override
   Widget build(BuildContext context) {
    return Container(
@@ -36,7 +52,12 @@ class _DesktopLayout extends StatelessWidget{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ScreenTitle()
+            _ScreenTitle(),
+            Expanded(
+              child: TaskDragTarget(
+                stages: stages, 
+                constraints: constraints,),
+            ),
         ],
         ),
       ),
@@ -44,6 +65,7 @@ class _DesktopLayout extends StatelessWidget{
    );
   }
 }
+
 
 class _Sidebar extends StatelessWidget {
   const _Sidebar({
@@ -91,7 +113,12 @@ class _Sidebar extends StatelessWidget {
 }
 
 class _TabletLayout extends StatelessWidget{
- const _TabletLayout({super.key});
+ const _TabletLayout({super.key, 
+ required this.constraints,
+ required this.stages,});
+
+final BoxConstraints constraints;
+final List<Stage> stages;
   
 @override
   Widget build(BuildContext context) {
@@ -104,7 +131,13 @@ class _TabletLayout extends StatelessWidget{
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _ScreenTitle()
+          _ScreenTitle(),
+           SizedBox(
+            height: constraints.maxHeight*0.8,
+             child: TaskDragTarget(
+                stages: stages, 
+                constraints: constraints,),
+           ),
       ],
       ),
     ],),
